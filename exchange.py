@@ -4,7 +4,6 @@ import aiohttp
 import asyncio
 import sys
 
-
 actual_currency = ['EUR', 'USD']
 
 
@@ -27,9 +26,17 @@ def arg_to_int() -> int:
     raise ValueError('Invalid args')
 
 
-def arg_to_days() -> list[str]:
+def arg_to_days(days=None) -> list[str]:
     today: datetime = datetime.today()
-    delta: int = arg_to_int()
+
+    if days:
+        try:
+            delta = int(days)
+        except ValueError:
+            delta = 1
+    else:
+        delta: int = arg_to_int()
+
     if delta > 1:
         first_day = today - timedelta(delta)
         list_days: list = []
@@ -40,17 +47,17 @@ def arg_to_days() -> list[str]:
     return [today.strftime('%d.%m.%Y')]
 
 
-def generate_api() -> list[str]:
+def generate_api(days=None) -> list[str]:
     all_days = []
-    for day in arg_to_days():
+    for day in arg_to_days(days):
         API = f'https://api.privatbank.ua/p24api/exchange_rates?json&date={day}'
         all_days.append(API)
     return all_days
 
 
-async def exchange() -> list[dict]:
+async def exchange(days=None) -> list[dict]:
     output = []
-    for url in generate_api():
+    for url in generate_api(days):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 result = await response.json()
@@ -62,6 +69,7 @@ async def exchange() -> list[dict]:
                 one_day_date = {date: day_rate}
                 output.append(one_day_date)
     return output
+
 
 if __name__ == "__main__":
     if platform.system() == 'Windows':

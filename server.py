@@ -36,14 +36,26 @@ class Server:
         finally:
             await self.unregister(ws)
 
+    async def send_exchange(self, message):
+        if message == 'exchange':
+            if platform.system() == 'Windows':
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+            r = await exchange()
+            await self.send_to_clients(f"{'exchange'}: {r}")
+        if message.startswith('exchange') and message != 'exchange':
+            days: int = message[-1]
+            print(days)
+            if platform.system() == 'Windows':
+                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+            r = await exchange(days)
+            await self.send_to_clients(f"{'exchange'}: {r}")
+
+
     async def distrubute(self, ws: WebSocketServerProtocol):
         async for message in ws:
             await self.send_to_clients(f"{ws.name}: {message}")
-            if message == 'exchange':
-                if platform.system() == 'Windows':
-                    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-                r = await exchange()
-                await self.send_to_clients(f"{'exchange'}: {r}")
+            if message.startswith('exchange'):
+                await self.send_exchange(message)
 
 
 async def serv():
