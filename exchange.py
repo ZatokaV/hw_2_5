@@ -48,7 +48,7 @@ def generate_api() -> list[str]:
     return all_days
 
 
-async def main() -> list[dict]:
+async def exchange() -> list[dict]:
     output = []
     for url in generate_api():
         async with aiohttp.ClientSession() as session:
@@ -66,5 +66,5 @@ async def main() -> list[dict]:
 if __name__ == "__main__":
     if platform.system() == 'Windows':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    r = asyncio.run(main())
+    r = asyncio.run(exchange())
     print(r)
