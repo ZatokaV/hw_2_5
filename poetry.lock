@@ -1,4 +1,18 @@
 [[package]]
+name = "aiofile"
+version = "3.8.1"
+description = "Asynchronous file operations."
+category = "main"
+optional = false
+python-versions = ">=3.7, <4"
+
+[package.dependencies]
+caio = ">=0.9.0,<0.10.0"
+
+[package.extras]
+develop = ["aiomisc", "pytest", "pytest-cov"]
+
+[[package]]
 name = "aiohttp"
 version = "3.8.3"
 description = "Async http client/server framework (asyncio)"
@@ -19,6 +33,18 @@ yarl = ">=1.0,<2.0"
 speedups = ["Brotli", "aiodns", "cchardet"]
 
 [[package]]
+name = "aiopath"
+version = "0.6.11"
+description = "📁 Async pathlib for Python"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+aiofile = ">=3.5.0,<4"
+anyio = ">=3.2.0,<4"
+
+[[package]]
 name = "aiosignal"
 version = "1.3.1"
 description = "aiosignal: a list of registered asynchronous callbacks"
@@ -28,6 +54,23 @@ python-versions = ">=3.7"
 
 [package.dependencies]
 frozenlist = ">=1.1.0"
+
+[[package]]
+name = "anyio"
+version = "3.6.2"
+description = "High level compatibility layer for multiple asynchronous event loop implementations"
+category = "main"
+optional = false
+python-versions = ">=3.6.2"
+
+[package.dependencies]
+idna = ">=2.8"
+sniffio = ">=1.1"
+
+[package.extras]
+doc = ["packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["contextlib2", "coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "mock (>=4)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (<0.15)", "uvloop (>=0.15)"]
+trio = ["trio (>=0.16,<0.22)"]
 
 [[package]]
 name = "async-timeout"
@@ -51,6 +94,17 @@ dev = ["attrs[docs,tests]"]
 docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-towncrier", "towncrier", "zope.interface"]
 tests = ["attrs[tests-no-zope]", "zope.interface"]
 tests-no-zope = ["cloudpickle", "cloudpickle", "hypothesis", "hypothesis", "mypy (>=0.971,<0.990)", "mypy (>=0.971,<0.990)", "pympler", "pympler", "pytest (>=4.3.0)", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-mypy-plugins", "pytest-xdist[psutil]", "pytest-xdist[psutil]"]
+
+[[package]]
+name = "caio"
+version = "0.9.11"
+description = "Asynchronous file IO for Linux MacOS or Windows."
+category = "main"
+optional = false
+python-versions = ">=3.7, <4"
+
+[package.extras]
+develop = ["aiomisc", "pytest", "pytest-cov"]
 
 [[package]]
 name = "charset-normalizer"
@@ -96,6 +150,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "sniffio"
+version = "1.3.0"
+description = "Sniff out which async library your code is running under"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "websockets"
 version = "10.4"
 description = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
@@ -118,9 +180,12 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "e6a7c3cf44d2805c7285ca3d844e6bcccdcadbee7ffe1b6ad165c788c3bcbb13"
+content-hash = "8f09fe58c6e19931cba55ccef39725bf2e1f04b190c79cedb4d35c9c002ae4c8"
 
 [metadata.files]
+aiofile = [
+    {file = "aiofile-3.8.1.tar.gz", hash = "sha256:1623b98d88fbd16bbd2808d010de4e185a700e950ed3f17455dd851aa2455f40"},
+]
 aiohttp = [
     {file = "aiohttp-3.8.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:ba71c9b4dcbb16212f334126cc3d8beb6af377f6703d9dc2d9fb3874fd667ee9"},
     {file = "aiohttp-3.8.3-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d24b8bb40d5c61ef2d9b6a8f4528c2f17f1c5d2d31fed62ec860f6006142e83e"},
@@ -210,9 +275,17 @@ aiohttp = [
     {file = "aiohttp-3.8.3-cp39-cp39-win_amd64.whl", hash = "sha256:88e5be56c231981428f4f506c68b6a46fa25c4123a2e86d156c58a8369d31ab7"},
     {file = "aiohttp-3.8.3.tar.gz", hash = "sha256:3828fb41b7203176b82fe5d699e0d845435f2374750a44b480ea6b930f6be269"},
 ]
+aiopath = [
+    {file = "aiopath-0.6.11-py2.py3-none-any.whl", hash = "sha256:7b1f1aa3acb422050908ac3c4755b5e43f625111be003f1bfc7dc2193027c45d"},
+    {file = "aiopath-0.6.11.tar.gz", hash = "sha256:2f0d4d9195281612c6508cbfa12ac3184c31540d13b9e6215a325897da59decd"},
+]
 aiosignal = [
     {file = "aiosignal-1.3.1-py3-none-any.whl", hash = "sha256:f8376fb07dd1e86a584e4fcdec80b36b7f81aac666ebc724e2c090300dd83b17"},
     {file = "aiosignal-1.3.1.tar.gz", hash = "sha256:54cd96e15e1649b75d6c87526a6ff0b6c1b0dd3459f43d9ca11d48c339b68cfc"},
+]
+anyio = [
+    {file = "anyio-3.6.2-py3-none-any.whl", hash = "sha256:fbbe32bd270d2a2ef3ed1c5d45041250284e31fc0a4df4a5a6071842051a51e3"},
+    {file = "anyio-3.6.2.tar.gz", hash = "sha256:25ea0d673ae30af41a0c442f81cf3b38c7e79fdc7b60335a4c14e05eb0947421"},
 ]
 async-timeout = [
     {file = "async-timeout-4.0.2.tar.gz", hash = "sha256:2163e1640ddb52b7a8c80d0a67a08587e5d245cc9c553a74a847056bc2976b15"},
@@ -221,6 +294,25 @@ async-timeout = [
 attrs = [
     {file = "attrs-22.2.0-py3-none-any.whl", hash = "sha256:29e95c7f6778868dbd49170f98f8818f78f3dc5e0e37c0b1f474e3561b240836"},
     {file = "attrs-22.2.0.tar.gz", hash = "sha256:c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99"},
+]
+caio = [
+    {file = "caio-0.9.11-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:3b9b2f1d94876ee3544b78d8a33e0c0091b79fe4bdc8cc00b64d4d9c59385195"},
+    {file = "caio-0.9.11-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:7a3adc061b2005e3e3e83066b5e9ac9966634ff65db5b60abe3bf1ec7f2c7903"},
+    {file = "caio-0.9.11-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:0a5c0d2d7d437c13ef72061acf0f4f878ae17642b73bd1d8a5594b9c7398f98e"},
+    {file = "caio-0.9.11-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:b9856bcb2f523e9ac2e00e75f3bd110a927b9ed0569a9d13c029d4b3aa8a79e4"},
+    {file = "caio-0.9.11-cp311-cp311-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:58e184d33e94962acbc9f4e8ff9b993ca6f78794de9018a2c3060cb2c190398e"},
+    {file = "caio-0.9.11-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:19255def9e395768573f002e9d01c3eaabbf6f4dda68a1c56a0862403da1faa6"},
+    {file = "caio-0.9.11-cp37-cp37m-macosx_10_15_x86_64.whl", hash = "sha256:8157587b6ee340d7510c7e37b6f5f1223ec363154b38b43b718c7cc6b77d58c2"},
+    {file = "caio-0.9.11-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6e81dd50f9b53db5214469f3b953bb16cfb96c05f08f334c7aaf0d9096c37689"},
+    {file = "caio-0.9.11-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7dcd1f63e50b6a175750bf1fd92734b0a9a53108ee14afa72971b64da1d701e5"},
+    {file = "caio-0.9.11-cp38-cp38-macosx_10_15_x86_64.whl", hash = "sha256:e02e0c241b6dc19be0f85ece23ff6861907ef1cc6a8923a81345887a79f29300"},
+    {file = "caio-0.9.11-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:22ad87a94b2062151ef78c613711c97ddcebba7399ece39e4fd88728853137d2"},
+    {file = "caio-0.9.11-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cf65276487232bca415f62699298601537b558d8fd11b038633e555c45d0e82f"},
+    {file = "caio-0.9.11-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:2086d65b157d39b0f070a3e6dfbca970c69d15547dfa9ef346506f4da968e960"},
+    {file = "caio-0.9.11-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:510f01f71361d31ce8938f691e96a7a1306c29e0475aa59a77300a61b6f0732a"},
+    {file = "caio-0.9.11-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:8e35124be09f9f26a420c279bbabb5ef0626ce0edff3e5b445e6102855453d63"},
+    {file = "caio-0.9.11-py3-none-any.whl", hash = "sha256:287f7a598d8497588f0f0578eb90343b0c9ff3803b57c24e58f54793333132bf"},
+    {file = "caio-0.9.11.tar.gz", hash = "sha256:33ca49789bf2d55bc3f5def36784c4624fbf16b78e9c299a2c7f6f22ac084aa6"},
 ]
 charset-normalizer = [
     {file = "charset-normalizer-2.1.1.tar.gz", hash = "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845"},
@@ -384,6 +476,10 @@ multidict = [
 ]
 names = [
     {file = "names-0.3.0.tar.gz", hash = "sha256:726e46254f2ed03f1ffb5d941dae3bc67c35123941c29becd02d48d0caa2a671"},
+]
+sniffio = [
+    {file = "sniffio-1.3.0-py3-none-any.whl", hash = "sha256:eecefdce1e5bbfb7ad2eeaabf7c1eeb404d7757c379bd1f7e5cce9d8bf425384"},
+    {file = "sniffio-1.3.0.tar.gz", hash = "sha256:e60305c5e5d314f5389259b7f22aaa33d8f7dee49763119234af3755c55b9101"},
 ]
 websockets = [
     {file = "websockets-10.4-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:d58804e996d7d2307173d56c297cf7bc132c52df27a3efaac5e8d43e36c21c48"},

@@ -1,14 +1,17 @@
 import asyncio
 import logging
-import platform
+from datetime import datetime
 
-import websockets
 import names
+import websockets
+from aiopath import AsyncPath
 from websockets import WebSocketServerProtocol
 from websockets.exceptions import ConnectionClosedOK
+
 from exchange import exchange
 
 logging.basicConfig(level=logging.INFO)
+LOGFILE = 'logs.txt'
 
 
 class Server:
@@ -30,38 +33,51 @@ class Server:
     async def ws_handler(self, ws: WebSocketServerProtocol):
         await self.register(ws)
         try:
-            await self.distrubute(ws)
+            await self.distribute(ws)
         except ConnectionClosedOK:
             pass
         finally:
             await self.unregister(ws)
 
-    async def send_exchange(self, message):
+    async def send_exchange(self, message, ):
         if message == 'exchange':
-            if platform.system() == 'Windows':
-                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-            r = await exchange()
-            await self.send_to_clients(f"{'exchange'}: {r}")
+            rate = await exchange()
+            await self.send_to_clients(f"{'exchange'}: {rate}")
+            log = f'{datetime.now()} Called exchange rate for today \n'
+            await write_log(log)
         if message.startswith('exchange') and message != 'exchange':
             days: int = message[-1]
-            print(days)
-            if platform.system() == 'Windows':
-                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-            r = await exchange(days)
-            await self.send_to_clients(f"{'exchange'}: {r}")
+            rate = await exchange(days)
+            await self.send_to_clients(f"{'exchange'}: {rate}")
+            log = f'{datetime.now()} Called exchange rate for {days} days \n'
+            await write_log(log)
 
-
-    async def distrubute(self, ws: WebSocketServerProtocol):
+    async def distribute(self, ws: WebSocketServerProtocol):
         async for message in ws:
             await self.send_to_clients(f"{ws.name}: {message}")
             if message.startswith('exchange'):
                 await self.send_exchange(message)
 
 
+async def logging_check():
+    log_file = AsyncPath(LOGFILE)
+    if await log_file.exists():
+        print('logs file ready')
+    else:
+        await log_file.touch()
+
+
+async def write_log(log):
+    with open(LOGFILE, 'a') as logfile:
+        logfile.write(log)
+
+
 async def serv():
+    await logging_check()
     server = Server()
     async with websockets.serve(server.ws_handler, 'localhost', 8080):
         await asyncio.Future()  # run forever
+
 
 if __name__ == '__main__':
     asyncio.run(serv())

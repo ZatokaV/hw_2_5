@@ -11,6 +11,7 @@ python = "^3.10"
 aiohttp = "^3.8.3"
 websockets = "^10.4"
 names = "^0.3.0"
+aiopath = "^0.6.11"
 
 
 [build-system]
