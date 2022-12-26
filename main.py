@@ -11,6 +11,11 @@ actual_currency = ['EUR', 'USD']
 def arg_to_int() -> int:
     if len(sys.argv) == 1:
         return 1
+    if len(sys.argv) == 2:
+        count_days = int(sys.argv[-1])
+        if 0 < count_days <= 10:
+            return count_days
+        raise ValueError('You can see only 10 last days')
     if len(sys.argv) == 3:
         new_currency = sys.argv[-1]
         actual_currency.append(new_currency)
@@ -19,12 +24,6 @@ def arg_to_int() -> int:
         if 0 < count_days <= 10:
             return count_days
         raise ValueError('You can see only 10 last days')
-    if len(sys.argv) == 2:
-        count_days = int(sys.argv[-1])
-        if 0 < count_days <= 10:
-            return count_days
-        raise ValueError('You can see only 10 last days')
-
     raise ValueError('Invalid args')
 
 
