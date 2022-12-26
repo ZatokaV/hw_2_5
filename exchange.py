@@ -18,7 +18,6 @@ def arg_to_int() -> int:
     if len(sys.argv) == 3:
         new_currency = sys.argv[-1]
         actual_currency.append(new_currency)
-        # print(actual_currency)
         count_days = int(sys.argv[-2])
         if 0 < count_days <= 10:
             return count_days
