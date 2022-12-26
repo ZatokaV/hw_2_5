@@ -74,5 +74,5 @@ async def exchange(days=None) -> list[dict]:
 if __name__ == "__main__":
     if platform.system() == 'Windows':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    r = asyncio.run(exchange())
-    print(r)
+    rate = asyncio.run(exchange())
+    print(rate)
